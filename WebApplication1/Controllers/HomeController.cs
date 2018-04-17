@@ -12,13 +12,24 @@ namespace WebApplication1.Controllers
     /// <summary>
     /// The home controller
     /// </summary>
-    public class HomeController : Controller
+    [ProblemFilter]
+    public class ContactController : Controller
     {
         /// <summary>
         /// The index method
         /// </summary>
         /// <returns>An action result</returns>
-        public IActionResult Index()
+        [HttpGet]
+        public IActionResult GetContacts()
+        {
+            return Json(new { Name = "Alex", Email = "test@test.com" });
+        }
+
+        /// <summary>
+        /// The index method
+        /// </summary>
+        /// <returns>An action result</returns>
+        public IActionResult About()
         {
             return this.View();
         }

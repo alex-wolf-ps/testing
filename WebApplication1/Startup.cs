@@ -7,6 +7,8 @@ namespace WebApplication1
 {
     using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.Hosting;
+    using Microsoft.AspNetCore.Mvc;
+    using Microsoft.AspNetCore.Mvc.Cors.Internal;
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
 
@@ -35,6 +37,12 @@ namespace WebApplication1
         /// <param name="services">The services</param>
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddCors(o => o.AddPolicy("MyPolicy", builder =>
+            {
+                builder.AllowAnyOrigin()
+                       .AllowAnyMethod()
+                       .AllowAnyHeader();
+            }));
             services.AddMvc();
         }
 
@@ -54,7 +62,7 @@ namespace WebApplication1
             {
                 app.UseExceptionHandler("/Home/Error");
             }
-
+            app.UseCors("MyPolicy");
             app.UseStaticFiles();
 
             app.UseMvc(routes =>
